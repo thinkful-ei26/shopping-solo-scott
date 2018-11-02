@@ -1,12 +1,15 @@
 /*eslint-env jquery*/
 'use strict';
 
-const STORE = [
-  {name: 'apples', checked: false},
-  {name: 'oranges', checked: false},
-  {name: 'milk', checked: true},
-  {name: 'bread', checked: false}
-];
+const STORE = {
+  itemList: [
+    {name: 'apples', checked: false},
+    {name: 'oranges', checked: false},
+    {name: 'milk', checked: true},
+    {name: 'bread', checked: false}
+  ],
+
+};
 
 function generateItemElement(item, itemIndex, template){
   return `
@@ -35,7 +38,7 @@ function generateShoppingItemsString(shoppingList) {
 
 function renderShoppingList() {
   console.log('`renderShoppingList`');
-  const shoppingListItemsString = generateShoppingItemsString(STORE);
+  const shoppingListItemsString = generateShoppingItemsString(STORE.itemList);
   //const shoppingListItemsString = '<li>apples</li>';
   // insert that HTML into the DOM
   $('.js-shopping-list').html(shoppingListItemsString);
@@ -43,7 +46,7 @@ function renderShoppingList() {
 
 function addItemToShoppingList (itemName){
   console.log(`Adding "${itemName}" to shopping list`);
-  STORE.push({name: itemName, checked: false});
+  STORE.itemList.push({name: itemName, checked: false});
 }
 
 function handleNewItemSubmit() {
@@ -61,13 +64,13 @@ function handleNewItemSubmit() {
 
 function toggleCheckedForListItem(itemIndex) {
   console.log('Toggling checked property for item at index ' + itemIndex);
-  STORE[itemIndex].checked = !STORE[itemIndex].checked;
+  STORE.itemList[itemIndex].checked = !STORE.itemList[itemIndex].checked;
 }
 
 function getItemIndexFromElement(item) {
   const itemIndexString = $(item).closest('.js-item-index-element')
     .attr('data-item-index');
-  return parseInt(itemIndexString, 10);
+  return parseInt(itemIndexString);
 
 }
 
@@ -86,7 +89,7 @@ function handleItemCheckClicked() {
 
 function deleteListItemFromStore (itemIndex){
   console.log('Deleting item at index ' + itemIndex);
-  STORE.splice(itemIndex, 1);
+  STORE.itemList.splice(itemIndex, 1);
 }
 
 function handleDeleteItemClicked() {
@@ -98,7 +101,7 @@ function handleDeleteItemClicked() {
     console.log(itemIndex);
     deleteListItemFromStore(itemIndex);
     renderShoppingList();
-  }); 
+  });
 }
 
 //doc ready function
