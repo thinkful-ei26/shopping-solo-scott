@@ -75,7 +75,7 @@ function handleItemCheckClicked() {
   // this function will be responsible for when users click the "check" button on
   // a shopping list item.
   $('.js-shopping-list').on('click', '.js-item-toggle', function(event){
-    console.log('`handleItemCheckClicked` ran');
+    //console.log('`handleItemCheckClicked` ran');
     const itemIndex = getItemIndexFromElement(event.currentTarget);
     console.log(itemIndex);
     toggleCheckedForListItem(itemIndex);
@@ -93,7 +93,7 @@ function handleDeleteItemClicked() {
   // this function will be responsible for when users want to delete a shopping list
   // item
   $('.js-shopping-list').on('click', '.js-item-delete', function(event){
-    console.log('`handleDeleteItemClicked` ran');
+    //console.log('`handleDeleteItemClicked` ran');
     const itemIndex = getItemIndexFromElement(event.currentTarget);
     console.log(itemIndex);
     deleteListItemFromStore(itemIndex);
