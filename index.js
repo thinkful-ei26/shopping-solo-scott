@@ -14,9 +14,16 @@ const STORE = {
 function renderShoppingList() {
   console.log('`renderShoppingList`');
   const shoppingListItemsString = generateShoppingItemsString(STORE.itemList);
-
   // insert that HTML into the DOM
   $('.js-shopping-list').html(shoppingListItemsString);
+  if (STORE.hideCheckedItems) {
+    $('.js-shopping-list').html(generateShoppingItemsString([ ...STORE.itemList ].filter(i => !i.checked)));
+  } //bug here where if hide checked items box is checked and then you click on
+  //an item's check button it will disappear, but then if you click on the next
+  //item's check button the previous item will reappear
+
+
+
 }
 
 function toggleHideCheckedItems() {
@@ -54,8 +61,6 @@ function generateItemElement(item, itemIndex, template){
 function generateShoppingItemsString(shoppingList) {
   console.log('Generating shopping list element');
   const items = shoppingList.map((item, index) => generateItemElement(item, index));
-
-
   return items.join('');
 }
 
