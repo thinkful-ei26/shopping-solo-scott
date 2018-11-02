@@ -8,8 +8,31 @@ const STORE = {
     {name: 'milk', checked: true},
     {name: 'bread', checked: false}
   ],
-
+  hideCheckedItems: false,
 };
+
+function renderShoppingList() {
+  console.log('`renderShoppingList`');
+  const shoppingListItemsString = generateShoppingItemsString(STORE.itemList);
+
+  // insert that HTML into the DOM
+  $('.js-shopping-list').html(shoppingListItemsString);
+}
+
+function toggleHideCheckedItems() {
+  console.log('toggleHideCheckedItems(); ran');
+  STORE.hideCheckedItems = !STORE.hideCheckedItems;
+  console.log(STORE.hideCheckedItems);
+}
+
+function handleToggleHideCheckedItems() {
+  console.log('handleToggleHideCheckedItems() ran');
+  $('.checkbox').on('click', '.js-toggle-hide-checked-items', function() {
+    console.log('handleToggleHideCheckedItems(); was clicked');
+    toggleHideCheckedItems();
+    renderShoppingList();
+  });
+}
 
 function generateItemElement(item, itemIndex, template){
   return `
@@ -36,20 +59,15 @@ function generateShoppingItemsString(shoppingList) {
   return items.join('');
 }
 
-function renderShoppingList() {
-  console.log('`renderShoppingList`');
-  const shoppingListItemsString = generateShoppingItemsString(STORE.itemList);
-  //const shoppingListItemsString = '<li>apples</li>';
-  // insert that HTML into the DOM
-  $('.js-shopping-list').html(shoppingListItemsString);
-}
 
-function addItemToShoppingList (itemName){
-  console.log(`Adding "${itemName}" to shopping list`);
-  STORE.itemList.push({name: itemName, checked: false});
-}
+
+
 
 function handleNewItemSubmit() {
+  function addItemToShoppingList (itemName){
+    console.log(`Adding "${itemName}" to shopping list`);
+    STORE.itemList.push({name: itemName, checked: false});
+  }
   // this function will be responsible for when users add a new shopping list item
   $('#js-shopping-list-form').submit(function(event){
     event.preventDefault();
@@ -110,6 +128,8 @@ function handleShoppingList() {
   handleNewItemSubmit();
   handleItemCheckClicked();
   handleDeleteItemClicked();
+
+  handleToggleHideCheckedItems();
 }
 
-$(handleShoppingList);
+$(handleShoppingList());
