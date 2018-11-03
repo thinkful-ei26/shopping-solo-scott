@@ -12,15 +12,13 @@ const STORE = {
 };
 
 function renderShoppingList() {
-  console.log('`renderShoppingList`');
+  console.log('renderShoppingList() ran');
   const shoppingListItemsString = generateShoppingItemsString(STORE.itemList);
   // insert that HTML into the DOM
   $('.js-shopping-list').html(shoppingListItemsString);
   if (STORE.hideCheckedItems) {
     $('.js-shopping-list').html(generateShoppingItemsString([ ...STORE.itemList ].filter(i => !i.checked)));
-  } //bug here where if hide checked items box is checked and then you click on
-  //an item's check button it will disappear, but then if you click on the next
-  //item's check button the previous item will reappear
+  }
 
 
 
@@ -69,6 +67,10 @@ function generateShoppingItemsString(shoppingList) {
 
 
 function handleNewItemSubmit() {
+  console.log('handleNewItemSubmit() ran');
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  //Is it bad to put these callback function declarations in the handler
+  //function that will be calling them?? seems to make the code more tidy
   function addItemToShoppingList (itemName){
     console.log(`Adding "${itemName}" to shopping list`);
     STORE.itemList.push({name: itemName, checked: false});
@@ -88,6 +90,10 @@ function handleNewItemSubmit() {
 function toggleCheckedForListItem(itemIndex) {
   console.log('Toggling checked property for item at index ' + itemIndex);
   STORE.itemList[itemIndex].checked = !STORE.itemList[itemIndex].checked;
+  //bug here(?) where if hide checked items box is checked and then you click on
+  //an item's check button it will disappear, but then if you click on the next
+  //item's check button the previous item will reappear. Seems to be STORE.items
+  //indexing issue
 }
 
 function getItemIndexFromElement(item) {
@@ -98,6 +104,8 @@ function getItemIndexFromElement(item) {
 }
 
 function handleItemCheckClicked() {
+  console.log('handleItemCheckClicked() ran');
+
   // this function will be responsible for when users click the "check" button on
   // a shopping list item.
   $('.js-shopping-list').on('click', '.js-item-toggle', function(event){
@@ -116,6 +124,8 @@ function deleteListItemFromStore (itemIndex){
 }
 
 function handleDeleteItemClicked() {
+  console.log('handleDeleteItemClicked() ran');
+
   // this function will be responsible for when users want to delete a shopping list
   // item
   $('.js-shopping-list').on('click', '.js-item-delete', function(event){
